@@ -75,9 +75,6 @@ pipeline {
             when {
                 branch 'master'
             }
-            environment { 
-                CANARY_REPLICAS = 0
-            }
             steps {
                 milestone(1)
                 kubernetesDeploy(
@@ -89,12 +86,12 @@ pipeline {
         }
     }
     post {
-    cleanup {
-        kubernetesDeploy (
-            kubeconfigId: 'kubeconfig',
-            configs: 'train-schedule-kube-canary.yml',
-            enableConfigSubstitution: true
-        )
+        cleanup {
+            kubernetesDeploy (
+                kubeconfigId: 'kubeconfig',
+                configs: 'train-schedule-kube-canary.yml',
+                enableConfigSubstitution: true
+            )
+        }
     }
-}
 }
